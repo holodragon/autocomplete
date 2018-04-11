@@ -16,6 +16,7 @@ public class AutocompleteApis {
 	private IAutocompleteStore store;
 
 	@Autowired
+	// private ProductGCSLoader loader;
 	private ProductJsonLoader loader;
 	// private ProductLoader loader;
 

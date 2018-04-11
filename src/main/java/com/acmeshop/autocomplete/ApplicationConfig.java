@@ -47,4 +47,18 @@ public class ApplicationConfig {
 		return new LocalJsonStoreImpl();
 	}
 
+	@Bean
+	@ConditionalOnProperty(name = "autocomplete.store.name", havingValue = "redis-json", matchIfMissing = true)
+	public IAutocompleteStore localRedisStoreService() {
+		log.info("using 'redis-json' store.");
+		return new RedisStoreImpl();
+	}
+
+	@Bean
+	@ConditionalOnProperty(name = "autocomplete.store.name", havingValue = "gcs", matchIfMissing = true)
+	public IAutocompleteStore localGCSStoreService() {
+		log.info("using 'gcs' store.");
+		return new LocalJsonStoreImpl();
+	}
+
 }

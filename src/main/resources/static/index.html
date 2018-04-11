@@ -2,11 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Movie autocomplete</title>
+<title>Solution Demo by Jason Peng</title>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
 <link rel="stylesheet" href="css/bootcomplete.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script
@@ -15,31 +19,120 @@
 
 </head>
 <body>
+	<nav class="navbar navbar-default navbar-pf" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/"> <img
+				src="/assets/img/brand.svg" alt="Solution Demo by Jason Peng" />
+			</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-utility">
+
+				<li class="dropdown"><a href="#0" class="nav-item-iconic"
+					id="horizontalDropdownMenu1" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"> <span title="Help"
+						class="fa pficon-help"></span> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenu1">
+						<li><a href="#0">Help</a></li>
+						<li><a href="#0">About</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#0" class="dropdown-toggle"
+					data-toggle="dropdown"> <span class="pficon pficon-user"></span>
+						Jason Peng <b class="caret"></b>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="#0">Link</a></li>
+						<li><a href="#0">Another link</a></li>
+						<li><a href="#0">Something else here</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu"><a tabindex="-1" href="#0">More
+								options</a>
+							<ul class="dropdown-menu">
+								<li><a href="#0">Link</a></li>
+								<li><a href="#0">Another link</a></li>
+								<li><a href="#0">Something else here</a></li>
+								<li class="divider"></li>
+								<li class="dropdown-header">Nav header</li>
+								<li><a href="#0">Separated link</a></li>
+								<li class="divider"></li>
+								<li><a href="#0">One more separated link</a></li>
+							</ul></li>
+						<li class="divider"></li>
+						<li><a href="#0">One more separated link</a></li>
+					</ul></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-primary">
+				<li class="active"><a href="#0">Autocomplete</a></li>
+				<li><a href="#1">demo2</a></li>
+				<li><a href="#2">demo3</a></li>
+				<li><a href="#3">demo4</a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<div class="container">
+		<!-- Just enjoy various PatternFly components -->
+		<!-- <div class="alert alert-success"> -->
+		<div class="container-fluid">
+			<div class="clearfix row" id="content">
+				<div id="main" class="col-md-12 clearfix" role="main">
+					<article class="post">
+						<section class="post_content">
+							<div class="sections sections-zebra">
+								<div class="row">
+									<header class="page-tabs-header">
+										<h1>ACME Online Store Product Category</h1>
+									</header>
+								</div>
+								<div class="row">
+									<div class="starter-template">
+										<!-- <h1>ACME Online Store Product Category</h1>  -->
+										<p class="lead">
+											An autocomplete demo for an E-commerce website.<br>
+										</p>
 
-		<div class="starter-template">
-			<h1>ACME Online Store Product Category</h1>
-			<p class="lead">
-				An autocomplete demo for an E-commerce website.<br>
-			</p>
+										<input id="example1" type="text" name="country"
+											placeholder="Enter a Product Name" class="form-control">
+									</div>
+								</div>
+								<div class="row">
+									<div>
+										<h1>Architecture Diagram</h1>
+									</div>
+								</div>
+								<div class="row">
+									<div class="section-img">
+										<img alt="architecture"
+											src="images/autocomplete-architecture.jpg">
+									</div>
+								</div>
+							</div>
+						</section>
+					</article>
+				</div>
+			</div>
 
-			<input id="example1" type="text" name="country"
-				placeholder="Enter a Product Name" class="form-control">
-		</div>
-		
-		<div>
-		<h1>Architecture Diagram</h1>
-			<img alt="architecture" src="images/autocomplete-architecture.jpg">
-		</div>
-		
 
-		<script type="text/javascript">
+
+			<script type="text/javascript">
 			$('#example1').bootcomplete({
 				url : 'autocomplete'
 			});
 		</script>
-	</div>
+		</div>
 
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
 </body>
 </html>

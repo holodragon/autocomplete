@@ -9,6 +9,7 @@ public class RedisStoreImpl extends AbstractAutocomplete {
 
 	@Autowired
 	private StringRedisTemplate redis;
+	// private RedisTemplate redis;
 
 	public void addNgram(String ngram, String id, String product) {
 		redis.opsForList().leftPush("ngram:" + ngram, id);
