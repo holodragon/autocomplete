@@ -11,12 +11,8 @@
 
 	<name>autocomplete</name>
 	<description>Autocomplete App for ACME.com</description>
-	<parent>
-		<groupId>com.google.cloud.samples</groupId>
-		<artifactId>shared-configuration</artifactId>
-		<version>1.0.2</version>
-	</parent>
-
+	<!-- <parent> <groupId>com.google.cloud.samples</groupId> <artifactId>shared-configuration</artifactId> 
+		<version>1.0.2</version> </parent> -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -86,17 +82,17 @@
 			<version>2.2.0</version>
 			<!-- <scope>compile</scope> -->
 		</dependency>
-		<dependency>	
-			<groupId>com.google.appengine</groupId>	
-			<artifactId>appengine-api-1.0-sdk</artifactId>	
-			<version>${appengine.version}</version>	
-			<!-- <scope>compile</scope> -->	
-		</dependency>	
-		<dependency>	
-			<groupId>com.google.appengine.tools</groupId>	
-			<artifactId>appengine-gcs-client</artifactId>	
-			<version>0.7</version>	
-			<!-- <scope>compile</scope> -->	
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.version}</version>
+			<!-- <scope>compile</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine.tools</groupId>
+			<artifactId>appengine-gcs-client</artifactId>
+			<version>0.7</version>
+			<!-- <scope>compile</scope> -->
 		</dependency>
 	</dependencies>
 
@@ -112,23 +108,37 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${springboot.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-
+	<profiles>
+		<!-- reference to cicd-settings.xml -->
+		<profile>
+			<id>nexus</id>
+			<!-- <activation> <activeByDefault>true</activeByDefault> </activation> -->
+			<distributionManagement>
+				<repository>
+					<id>nexus-release</id>
+					<url>http://192.168.64.1:8081/nexus/content/repositories/releases</url>
+				</repository>
+				<snapshotRepository>
+					<id>nexus-snapshots</id>
+					<url>http://192.168.64.1:8081/nexus/content/repositories/snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<version>${springboot.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
