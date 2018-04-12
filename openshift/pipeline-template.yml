@@ -51,44 +51,141 @@ objects:
           - name: "TEST_PRJ"
             value: "${TEST_PROJECT}"
         jenkinsfile: |-
-          node('mvn') {
+            def version, mvnCmd = "mvn -s configuration/cicd-settings.xml"
+
+            pipeline {
+             agent {
+               label 'maven'
+             }
              // define commands
-             def mvnCmd = "mvn -s configuration/cicd-settings.xml"
+             stages {
+              stage('Build App') {
+                 steps {
+                   git branch: 'master', url: 'https://github.com/holodragon/autocomplete.git'
+                   script {
+                       def pom = readMavenPom file: 'pom.xml'
+                       version = pom.version
+                   }
+                   sh "${mvnCmd} install -DskipTests=true"
+              }
+              }
+              # stage('Test') {
+              #    steps {
+              #      sh "${mvnCmd} test"
+              #      step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+              #    }
+              # }
+              # stage('Code Analysis') {
+              #    steps {
+              #      script {
+              #        sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -DskipTests=true"
+              #      }
+              #    }
+              # }
 
-             stage ('Build') {
-               git branch: 'master', url: 'https://github.com/holodragon/autocomplete.git'
-               sh "${mvnCmd} clean install -DskipTests=true"
-             }
-
-             stage ('Test') {
-               sh "${mvnCmd} test"
-               step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-             }
-
-             stage ('Push to Nexus') {
-              sh "${mvnCmd} deploy -DskipTests=true"
-             }
-
-             stage ('Deploy DEV') {
-               sh "rm -rf oc-build && mkdir -p oc-build/deployments"
-               sh "cp target/*.jar oc-build/deployments/"
-               // build image
-               sh "oc start-build autocomplete --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
-             }
-
-             stage ('Deploy TEST') {
-               timeout(time:15, unit:'MINUTES') {
-                  input message: "Promote to TEST?", ok: "Promote"
+              stage('Check and Create Image Builder') {
+                 when {
+                   expression {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         return !openshift.selector("bc", "autocomplete").exists();
+                       }
+                     }
+                   }
+                 }
+                 steps {
+                   script {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         openshift.newBuild("--name=autocomplete", "--image-stream=redhat-openjdk18-openshift:latest", "--binary=true")
+                       }
+                     }
+                   }
+                 }
                }
 
-               def v = version()
-               // tag for stage
-               sh "oc tag ${DEV_PROJECT}/autocomplete:latest ${TEST_PROJECT}/autocomplete:${v}"
-             }
-          }
+              stage('Build Image') {
+                 steps {
+                   sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+                   sh "cp target/*.jar oc-build/deployments/"
 
-          def version() {
-            def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-            matcher ? matcher[0][1] : null
-          }
+                   script {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         openshift.selector("bc", "autocomplete").startBuild("--from-dir=oc-build", "--wait=true")
+                       }
+                     }
+                   }
+                 }
+              }
+              stage('Check and Create DEV') {
+                 when {
+                   expression {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         return !openshift.selector('dc', 'autocomplete').exists()
+                       }
+                     }
+                   }
+                 }
+                 steps {
+                   script {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         def app = openshift.newApp("autocomplete:latest")
+                         app.narrow("svc").expose();
+
+                         def dc = openshift.selector("dc", "autocomplete")
+                         while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                             sleep 10
+                         }
+                         openshift.set("triggers", "dc/autocomplete", "--manual")
+                       }
+                     }
+                   }
+                 }
+              }
+              stage('Deploy DEV') {
+                 steps {
+                   script {
+                     openshift.withCluster() {
+                       openshift.withProject(env.DEV_PRJ) {
+                         openshift.selector("dc", "autocomplete").rollout().latest();
+                       }
+                     }
+                   }
+                 }
+              }
+              stage('Promote to TEST?') {
+                 steps {
+                   timeout(time:15, unit:'MINUTES') {
+                       input message: "Promote to TEST?", ok: "Promote"
+                   }
+
+                   script {
+                     openshift.withCluster() {
+                       openshift.tag("${env.DEV_PRJ}/autocomplete:latest", "${env.TEST_PRJ}/autocomplete:${version}")
+                     }
+                   }
+                 }
+               }
+              stage('Deploy TEST') {
+                 steps {
+                   script {
+                     openshift.withCluster() {
+                       openshift.withProject(env.TEST_PRJ) {
+                         if (openshift.selector('dc', 'autocomplete').exists()) {
+                           openshift.selector('dc', 'autocomplete').delete()
+                           openshift.selector('svc', 'autocomplete').delete()
+                           openshift.selector('route', 'autocomplete').delete()
+                         }
+
+                         openshift.newApp("autocomplete:${version}").narrow("svc").expose()
+                       }
+                     }
+                   }
+                 }
+               }
+             }
+            }
       type: JenkinsPipeline
