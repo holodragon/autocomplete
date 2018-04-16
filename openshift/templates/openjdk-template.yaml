@@ -66,10 +66,15 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
+        env:
+        - name: JAVA_OPTIONS
+          value: ${JAVA_OPTIONS}
+        - name: MAVEN_MIRROR_URL
+          value: ${MAVEN_MIRROR_URL}
         forcePull: true
         from:
           kind: ImageStreamTag
-          name: redhat-openjdk18-openshift:1.1
+          name: redhat-openjdk18-openshift:latest
           namespace: ${IMAGE_STREAM_NAMESPACE}
       type: Source
     triggers:
@@ -128,6 +133,16 @@ objects:
       type: ImageChange
     - type: ConfigChange
 parameters:
+## OpenJDK BUILD ENV
+- description: <BUILD> JAVA options
+  displayName: <BUILD> JAVA OPTION
+  name: JAVA_OPTIONS
+  value: -Dspring.profiles.active=cloud
+- description: <BUILD> MAVEN mirror host
+  displayName: <BUILD> MAVEN MIRROR URL
+  name: MAVEN_MIRROR_URL
+  value: http://nexus-cicd.apps.example.com/content/groups/public/
+## OpenJDK DEPLOY ENV
 - description: The name for the application.
   displayName: Application Name
   name: APPLICATION_NAME
