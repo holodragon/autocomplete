@@ -16,17 +16,17 @@ mvn spring-boot:run
 ```
 http://localhost:8080/
 ```
-![alt text](https://github.com/holodragon/autocomplete/images/img1-1.png "running locally")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img1-1.png "running locally")
 
 #### load data into local Map
 ```
 http://localhost:8080/load/
 ```
-![alt text](https://github.com/holodragon/autocomplete/images/img1-2.png "load data into local map")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img1-2.png "load data into local map")
 
 #### check the autocomplete function
 
-![alt text](https://github.com/holodragon/autocomplete/images/img1-3.png "autocomplete works")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img1-3.png "autocomplete works")
 
 ## Deploy the application to OpenShift
 #### login and create a project to OpenShift cluster.
@@ -44,29 +44,29 @@ oc create -f openshift/templates/openjdk-redis-template.yaml
 
 1. Select the template named **"Red Hat OpenJDK 8 S2I, Redis (Ephemeral)"**
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-1.png "select template")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-1.png "select template")
 
 2. Check the environment variables, modify the **Maven mirror path** and **application name** accordingly
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-2.png "review envs")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-2.png "review envs")
 
 3. depending on network bandwidth, the building time may be different
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-3.png "building app")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-3.png "building app")
 
 4. after the build completed, the image will be auto-deployed and we can verify the app through auto-created route URL.
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-4.png "app deployed")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-4.png "app deployed")
 
 5. similar running the app locally, data can be loaded into data store through uri **/load/**.
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-5.png "load data into redis")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-5.png "load data into redis")
 
 6. However, this time instead of import data to java map, the data will be loaded into redis database.
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-6.png "verify data in redis")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-6.png "verify data in redis")
 
-![alt text](https://github.com/holodragon/autocomplete/images/img2-7.png "verify app function")
+![alt text](https://raw.githubusercontent.com/holodragon/autocomplete/images/img2-7.png "verify app function")
 
 
 
