@@ -37,7 +37,6 @@ oc create -f ../templates/pipeline-template.yml -n $PROJECT_CICD
 #### provision whole CI/CD demo on UI
 
 
-
 # docker login registry.connect.redhat.com --username $REDHAT_ACCOUNT_ID --password $REDHAT_ACCOUNT_PWD
 # oc create secret generic redhat-connect --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
 # oc secrets link default redhat-connect --for=pull
