@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# REDHAT_ACCOUNT_ID="a@redhat.com"
-# REDHAT_ACCOUNT_PWD="12345678"
 OPENSHIFT_URL="https://192.168.64.4:8443"
 OPENSHIFT_TOKEN=$(oc whoami -t)
 PROJECT_CICD="cicd"
