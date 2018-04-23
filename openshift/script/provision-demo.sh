@@ -34,6 +34,13 @@ oc create -f ../templates/pipeline-template.yml -n $PROJECT_CICD
 
 #### provision whole CI/CD demo on UI
 
+oc new-app nexus3 -n $PROJECT_CICD
+
+NEXUS_ROUTE="http://`oc get route -n cicd|grep nexus|awk '{print $2}'`/repository/maven-public/"
+
+oc new-app openjdk18-redis-s2i --name='autocomplete' -p MAVEN_MIRROR_URL="$NEXUS_ROUTE" -p APPLICATION_NAME=autocomplete -n $PROJECT_DEV
+
+oc new-app openjdk18-redis-s2i --name='autocomplete' -p MAVEN_MIRROR_URL="$NEXUS_ROUTE" -p APPLICATION_NAME=autocomplete -n $PROJECT_STAGE
 
 # docker login registry.connect.redhat.com --username $REDHAT_ACCOUNT_ID --password $REDHAT_ACCOUNT_PWD
 # oc create secret generic redhat-connect --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
