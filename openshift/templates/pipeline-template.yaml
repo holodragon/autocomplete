@@ -47,8 +47,13 @@ objects:
             value: "${SOURCE_URL}"
           - name: "SRC_BRANCH"
             value: "${SOURCE_BRANCH}"
+          - name: "LOCAL_NEXUS"
+            value: "${LOCAL_NEXUS}"
         jenkinsfile: |-
             def version, mvnCmd = "mvn -s configuration/cicd-settings.xml"
+            if ("${env.LOCAL_NEXUS}"=="true") {
+              mvnCmd = "mvn -s configuration/cicd-settings-local.xml"
+            }
 
             pipeline {
              agent {
@@ -161,7 +166,7 @@ objects:
 
                    script {
                      openshift.withCluster() {
-                       openshift.tag("${env.DEV_PRJ}/${env.APP_NAME}:latest", "${env.STAGE_PRJ}/${env.APP_NAME}:${version}")
+                       openshift.tag("${env.DEV_PRJ}/${env.APP_NAME}:latest", "${env.STAGE_PRJ}/${env.APP_NAME}:latest")
                      }
                    }
                  }
@@ -171,13 +176,7 @@ objects:
                    script {
                      openshift.withCluster() {
                        openshift.withProject(env.STAGE_PRJ) {
-                         if (openshift.selector('dc', "${env.APP_NAME}").exists()) {
-                           openshift.selector('dc', "${env.APP_NAME}").delete()
-                           openshift.selector('svc', "${env.APP_NAME}").delete()
-                           openshift.selector('route', "${env.APP_NAME}").delete()
-                         }
-
-                         openshift.newApp("${env.APP_NAME}:${version}").narrow("svc").expose()
+                         openshift.selector("dc", "${env.APP_NAME}").rollout().latest();
                        }
                      }
                    }
@@ -189,7 +188,7 @@ objects:
 parameters:
 - description: Application Name
   displayName: Application Name
-  value: cicd-app
+  value: autocomplete
   name: APPLICATION_NAME
   required: true
 - description: Project id of DEV environment
@@ -221,3 +220,7 @@ parameters:
   name: SOURCE_BRANCH
   value: master
   required: true
+- description: Local nexus mirror
+  displayName: Flag for local nexus mirror
+  name: LOCAL_NEXUS
+  value: "true"
