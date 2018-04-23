@@ -28,6 +28,22 @@ http://localhost:8080/load/
 
 ![alt text](https://github.com/holodragon/autocomplete/raw/master/images/img1-3.png "autocomplete works")
 
+## Run the application locally with Docker
+```
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_PASSWORD=
+
+docker run -p 6379:6379 -d redis
+docker ps
+docker exec -i -t {container id} /bin/bash
+/>redis-cli
+/>auth {password}
+/>keys *
+mvn spring-boot:run -Dspring.profiles.active=cloud
+```
+
+
 ## Deploy the application to OpenShift
 #### login and create a project to OpenShift cluster.
 ```
