@@ -250,7 +250,7 @@ parameters:
 - description: <BUILD> MAVEN mirror host
   displayName: <BUILD> MAVEN MIRROR URL
   name: MAVEN_MIRROR_URL
-  value: http://nexus-cicd.apps.example.com/content/groups/public/
+  value: http://192.168.64.1:8081/nexus/content/groups/public/
 ## OpenJDK DEPLOY ENV
 - description: The name for the application.
   displayName: Application Name
