@@ -122,6 +122,13 @@ oc create -f openshift/templates/openjdk-redis-template.yaml
 
 ![alt text](https://github.com/holodragon/autocomplete/raw/master/images/img2-7.png "verify app function")
 
+### Clean up
+
+you can clean up resources created on your openshift cluster by following commends.
+```
+oc login https://192.168.64.4:8443  (your openshift console url)
+oc delete project demoprj
+```
 
 ### Solutions
 1. if developer want to deliver the whole running environment to other people or teams(ex: Ops team), there are more than just docker images.
@@ -133,24 +140,13 @@ oc create -f openshift/templates/openjdk-redis-template.yaml
 
 ## Deploy CI/CD tools for the application on OpenShift
 
-#### deploy Redis using template on both $PROJECT_DEV $PROJECT_STAGE Project, with variables: Host, Port, ID, Password
-
-#### deploy pipeline using template named cicd in $PROJECT_CICD project
-
-#### deploy pipeline using template named cicd in $PROJECT_CICD project
-
-
-
-#### prepare for deploying on OpenShift
-
 ```
 ./openshift/script/provision-demo.sh
 ```
 
+### Clean up
 
-## Clean up
-
-you can clean up all the demo resource created on your openshift cluster by following steps.
+you can clean up all the demo resource created on your openshift cluster by following commends.
 ```
 oc login https://192.168.64.4:8443  (your openshift console url)
 oc delete project $PROJECT_CICD
