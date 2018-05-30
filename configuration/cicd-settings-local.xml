@@ -3,12 +3,12 @@
 		<server>
 			<id>nexus-release</id>
 			<username>admin</username>
-			<password>1qaz@WSX</password>
+			<password>admin123</password>
 		</server>
 		<server>
 			<id>nexus-snapshots</id>
 			<username>admin</username>
-			<password>1qaz@WSX</password>
+			<password>admin123</password>
 		</server>
 	</servers>
 	<mirrors>
@@ -16,7 +16,7 @@
 			<!--This sends everything else to /public -->
 			<id>nexus</id>
 			<mirrorOf>*</mirrorOf>
- 			<url>http://192.168.64.1:8081/nexus/content/groups/public/</url>
+ 			<url>http://nexus-cicd.apps.rhtpe.com/repository/maven-public/</url>
 		</mirror>
 	</mirrors>
 	<profiles>
