@@ -43,6 +43,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${springboot.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 			<!-- Exclude Tomcat so that it doesn't conflict w/ Jetty server -->
 			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
 				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
@@ -100,6 +106,10 @@
 			<!-- <scope>compile</scope> -->
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>net.logstash.log4j</groupId>
 			<artifactId>jsonevent-layout</artifactId>
