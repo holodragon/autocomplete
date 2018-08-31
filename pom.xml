@@ -41,7 +41,7 @@
 			<version>1.0.2.RELEASE</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
 			<version>${springboot.version}</version>
 			<exclusions>
 				<exclusion>
@@ -49,6 +49,11 @@
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${springboot.version}</version>
 			<!-- Exclude Tomcat so that it doesn't conflict w/ Jetty server -->
 			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
 				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
@@ -109,6 +114,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j</artifactId>
+			<version>${springboot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.logstash.log4j</groupId>
