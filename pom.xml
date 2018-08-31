@@ -12,11 +12,12 @@
 
 	<name>autocomplete</name>
 	<description>Autocomplete App for ACME.com</description>
-	<parent>
+<!-- 	<parent>
 		<groupId>com.google.cloud.samples</groupId>
 		<artifactId>shared-configuration</artifactId>
 		<version>1.0.2</version>
-	</parent>
+	</parent> -->
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,6 +31,12 @@
 		<!-- <springboot.version>1.4.4.RELEASE</springboot.version> -->
 		<springboot.version>1.5.8.RELEASE</springboot.version>
 	</properties>
+
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>${springboot.version}</version>
+    </parent>
 
 	<dependencies>
 		<dependency>
@@ -50,14 +57,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${springboot.version}</version>
-			<!-- Exclude Tomcat so that it doesn't conflict w/ Jetty server -->
-			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
-				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
-		</dependency>
+			Exclude Tomcat so that it doesn't conflict w/ Jetty server
+			<exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions>
+		</dependency> -->
 		<!-- Add for GAE -->
 		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>jul-to-slf4j</artifactId> 
 			<scope>provided</scope> </dependency> -->
@@ -65,12 +72,13 @@
 		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
 			<version>3.1.0</version> <scope>provided</scope> </dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${springboot.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -114,7 +122,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j</artifactId>
-			<version>${springboot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.logstash.log4j</groupId>
