@@ -12,7 +12,7 @@
 
 	<name>autocomplete</name>
 	<description>Autocomplete App for ACME.com</description>
-	<!-- <parent> <groupId>com.google.cloud.samples</groupId> <artifactId>shared-configuration</artifactId> 
+	<!-- <parent> <groupId>com.google.cloud.samples</groupId> <artifactId>shared-configuration</artifactId>
 		<version>1.0.2</version> </parent> -->
 
 	<parent>
@@ -31,6 +31,8 @@
 		<appengine.maven.plugin>1.3.2</appengine.maven.plugin>
 		<gcloud.plugin.version>2.0.9.101.v20160316</gcloud.plugin.version>
 		<appengine.version>1.9.36</appengine.version>
+		<springboot.version>1.5.4.RELEASE</springboot.version>
+		<!-- <springboot.version>1.5.8.RELEASE</springboot.version> -->
 	</properties>
 
 	<dependencies>
@@ -39,11 +41,11 @@
 			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
 			<version>3.1.11</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-legacy</artifactId> 
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-legacy</artifactId>
 			<version>1.0.2.RELEASE</version> </dependency> -->
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId> 
-			<version>${springboot.version}</version> <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-starter-logging</artifactId> </exclusion> </exclusions> 
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId>
+			<version>${springboot.version}</version> <exclusions> <exclusion> <groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId> </exclusion> </exclusions>
 			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,7 +61,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-				<!-- <exclusion> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId> 
+				<!-- <exclusion> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId>
 					</exclusion> -->
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
